@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+<style>
+body {
+    margin: 0;
+    background: #ebebeb;
+}
+
+#map {
+    width: 90%;
+}
+
+</style>  
+</head>
+<body>
+    
+<div id="text"></div>
+<div id="map"></div>
+<!-- <div id="info"></div> -->
+
+
+    <script>
+        "use strict";
+        let fillcolor;
+        let newcolor = "#cal";
+        let areaId;
+        let myJson;
+        let id;
+
+        document.addEventListener("DOMContentLoaded", getData)
+    //load the svg
+
+    async function getData() {
+        let svgData = await fetch("map.svg");
+        let mySvg = await svgData.text();
+    // show svg in DOM
+        document.querySelector("#map").innerHTML = mySvg;
+   
+
+    //load the json
+    const jsonData = await fetch("data.json");
+    myJson = await jsonData.json();
+    //console.log(myJson)
+    //change color on mouseover
+    document.querySelector("svg").addEventListener("mouseover", changeColor);
+    //change color back
+    document.querySelector("svg").addEventListener("mouseout", originalColor);
+    }
+    // change color on hover
+    function changeColor() {
+    // What have i hovered?
+    let area = event.target;
+    areaId = area.id;
+    id = area.parentElement.id;
+    //What is the original fill color?
+    fillcolor = area.getAttribute("fill");
+
+    document.querySelector("#" + areaId).setAttribute("fill", newcolor);
+
+    myJson.forEach(element =>{
+    //see if there is a match
+    if(element.city == id){
+    // console.log("city is", element.city);
+        document.querySelector("#text").textContent = element.city;
+    }
+
+    })
+    // console.log(fillcolor);
+    };
+    // change color back on mouseout
+    function originalColor() {
+    document.querySelector("#" + areaId).setAttribute("fill", fillcolor);
+
+
+    }
+    
+    </script>
+</body>
+</html>
