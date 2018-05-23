@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Circle manner!
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <style>
+    #svgcontainer {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    circle {
+        width: 50%;
+        fill: none;
+    }
+    svg {
+        background: #ebebeb;
+        transform: rotate(-90deg);
+        border-radius: 50%;
+        
+    }
+
+    #c1 {
+        fill: none;
+        stroke: #a55;
+        stroke-width: 72px;
+        stroke-dasharray: 0 314;
+        stroke-dashoffset: 0;
+        transition: all 2s ease;
+    }
+    #c2 {
+        fill: none;
+        stroke: rgb(85, 116, 170);
+        stroke-width: 45px;
+        stroke-dasharray: 0 314;
+        stroke-dashoffset: 0;
+        transition: all 2s ease;
+    }
+
+    #c3 {
+        fill: none;
+        stroke: rgb(113, 170, 85);
+        stroke-width: 68px;
+        stroke-dasharray: 0 314;
+        stroke-dashoffset: 0;
+        transition: all 2s ease;
+    }
+
+
+
+    
+    
+    </style>
+</head>
+<body>
+    
+<div id="svgcontainer">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle id="c1" cx="50" cy="50" r="50"/>
+        <circle id="c2" cx="50" cy="50" r="50"/>
+        <circle id="c3" cx="50" cy="50" r="50"/>
+      </svg>
+
+    </div>
+    <script>
+    "use strict";
+
+    let myJson;
+    let areaId;
+    let id;
+    let stroke;
+
+    document.addEventListener("DOMContentLoaded", getData);
+//henter json
+async function getData() {
+    const jsonData = await fetch("data.json");
+    myJson = await jsonData.json();
+    console.log(myJson);
+};
+//aktiver et eller andet på hover
+ document.querySelector("#svgcontainer").addEventListener("mouseover", animate)
+
+
+
+function animate() {
+  let circleOne = document.querySelector("#c1");
+// hvad er den originale stroke
+
+    circleOne.style.strokeDashoffset = "-80"
+  //  stroke = circleOne.getAttribute("stroke-dashoffset");
+
+   // document.querySelector("#c1").setAttribute("stroke-dashoffset", myJson);
+
+    // console.log(stroke)
+ }
+
+
+ myJson.forEach(element =>{
+    //see if there is a match
+    if(element.circle == stroke){
+    // console.log("city is", element.city);
+        document.querySelector("#c1").textContent = element.circle;
+    }
+
+    });
+
+
+
+    //     document.querySelector("#svgcontainer").addEventListener("mouseover", strokeDraw);
+    //     function strokeDraw(){
+
+    //     document.querySelector("#c1").style.strokeDasharray = 160;
+    //     document.querySelector("#c2").style.strokeDasharray = 160;
+    //     document.querySelector("#c3").style.strokeDasharray = 160;
+
+
+    //     document.querySelector("#c1").style.strokeDashoffset = 0;
+    //     document.querySelector("#c2").style.strokeDashoffset = -80;
+    //     document.querySelector("#c3").style.strokeDashoffset = -160;
+
+    // }
+        
+    // document.querySelector("#svgcontainer").addEventListener("mouseout", strokeBack);
+    //     function strokeBack(){
+
+            
+    //     document.querySelector("#c1").style.strokeDasharray = 20, 314;
+    //     document.querySelector("#c2").style.strokeDasharray = 40, 314;
+    //     document.querySelector("#c3").style.strokeDasharray = 60, 314;
+
+
+    //     document.querySelector("#c1").style.strokeDashoffset = 0;
+    //     document.querySelector("#c2").style.strokeDashoffset = 0;
+    //     document.querySelector("#c3").style.strokeDashoffset = 0;
+        
+    // }
+    
+    </script>
+</body>
+</html>
